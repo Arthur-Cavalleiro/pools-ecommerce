@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Piscinas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0 auto;
+            padding: 0;
+            background-color: #f0f0f0;
+            width: 70%;
+        }
+        .screen{
+            margin: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        .Barra{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+        }
+        .Barra h1 {
+            margin: 0;
+            color: #333;
+        }
+        .Barra nav ul {
+            display: flex;
+            gap: 10px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        a {
+            color: #333;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        form div {
+            margin-bottom: 10px;
+            padding-right: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+            -moz-appearance: textfield;
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+            width: 40%;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+
+        .container {
+            padding: 2px 16px;
+        }
+        .cardList{
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+    </style>
+</head>
+<body>
+    <main class="screen">
+        <div class="Barra">
+            <h1>Piscinas</h1>
+            <nav>
+              <ul>
+                <li><a href="/">Lista de Piscinas</a></li>
+                <li><a href="/calculo">Calculo de área</a></li>
+              </ul>
+            </nav>
+        </div>
+        <br/>
+        <form action="/getPoolsPerArea" method="post">
+            <div>
+                <label for="comprimento">Comprimento</label>
+                <input type="number" id="comprimento" name="comprimento" min="1" required>
+            </div>
+            <div>
+                <label for="largura">Largura</label>
+                <input type="number" id="largura" name="largura" min="1" required>
+            </div>
+            <div>
+                <label for="altura">Altura</label>
+                <input type="number" id="altura" name="altura" min="1" required>
+            </div>
+            <div>
+                <label for="orcamento">Orçamento</label>
+                <input type="number" id="orcamento" name="orcamento" min="1" required>
+            </div>
+            <input type="submit" value="Enviar">
+        </form>
+        <div class="cardList">
+            {% for pool in pools%}
+            <div class="card">
+                <img src={{pool.img}} alt={{pool.name}} style="width:100%">
+                <div class="container">
+                    <h4><b>{{pool.name}}</b></h4>
+                    <p>Valor: {{pool.price}}</p>
+                    <p>Largura: {{pool.width}} metros</p>
+                    <p>Altura: {{pool.length}} metros</p>
+                    <p>Profundidade: {{pool.depth}} metros</p>
+                    <p>Volume: {{pool.volume}} metros cúbicos</p>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+
+    </main>
+</body>
+</html>
