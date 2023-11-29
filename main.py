@@ -1,7 +1,5 @@
 from flask import Flask, render_template, request, redirect
-from functions import perform_area_calculation
-import requests
-import json
+from functions import perform_area_calculation, request_pool_data
 
 app = Flask(__name__)
 
@@ -11,21 +9,33 @@ poolsPerArea = []
 
 @app.route('/')
 def menu_page():
-    return render_template('Menu.html', conteudo='teste')
+    pools.clear()
+
+    resultados = request_pool_data()
+
+    for pool in resultados:
+        pools.append(pool)
+
+    return render_template('Menu.html', pools=pools)
 
 
 @app.route('/calculo')
 def calculation_page():
-    return render_template('Calc.html', pools=pools)
+    return render_template('Calc.html', poolsPerArea=poolsPerArea)
 
 
 @app.route('/getPoolsPerArea', methods=['POST'])
 def calculate_pools():
-    comprimento = request.form.get('comprimento')
-    largura = request.form.get('largura')
-    orcamento = request.form.get('orcamento')
+    poolsPerArea.clear()
 
-    calculated_pools = perform_area_calculation(comprimento, largura, orcamento)
+    comprimento = float(request.form.get('comprimento'))
+    largura = float(request.form.get('largura'))
+    orcamento = float(request.form.get('orcamento'))
+
+    resultados = perform_area_calculation(comprimento, largura, orcamento)
+
+    for pool in resultados:
+        poolsPerArea.append(pool)
 
     return redirect('/calculo')
 

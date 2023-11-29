@@ -92,6 +92,10 @@
         .cardList{
             display: flex;
             flex-wrap: wrap;
+            width:100%;
+            justify-content: center;
+            margin-top: 8px;
+            gap: 8px;
         }
 
     </style>
@@ -124,11 +128,11 @@
             <input type="submit" value="Enviar">
         </form>
         <div class="cardList">
-            {% for pool in pools%}
+            {% for pool in poolsPerArea%}
             <div class="card">
-                <img src={{pool.img}} alt={{pool.name}} style="width:100%">
+                <img src={{pool.img}} alt={{pool.pool_name}} style="width:100%">
                 <div class="container">
-                    <h4><b>{{pool.name}}</b></h4>
+                    <h4><b>{{pool.pool_name}}</b></h4>
                     <p>Valor: {{pool.price}}</p>
                     <p>Largura: {{pool.width}} metros</p>
                     <p>Altura: {{pool.length}} metros</p>
